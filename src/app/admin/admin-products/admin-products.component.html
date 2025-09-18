@@ -1,0 +1,60 @@
+<p>
+    <a routerLink="/admin/products/new" class="btn btn-primary mt-1">New Product</a>
+</p>
+
+
+<div class="row">
+    <div class="col-md-11">
+        <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-outline-secondary btn-clear" (click)="clearSearch(query)">Clear</button>
+    </div>
+</div>
+
+<div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <!-- Nr Column -->
+        <ng-container matColumnDef="nr">
+            <th mat-header-cell *matHeaderCellDef> <b>Nr.</b> </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1}}
+                <!-- {{(dataSource.paginator?.pageIndex ?? 0) * (dataSource.paginator?.pageSize ?? 1) + i + 1}} -->
+            </td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Title</b> </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Price</b> </th>
+            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <!-- Edit Column -->
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> <b>Operation</b> </th>
+            <td mat-cell *matCellDef="let element">
+                <button class="btn btn-outline-secondary btn-edit"
+                    [routerLink]="['/admin/products', element.key]">Edit</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when no matches found -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No products found</td>
+        </tr>
+    </table>
+
+    <mat-paginator #paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+        aria-label="Select page"></mat-paginator>
+
+</div>

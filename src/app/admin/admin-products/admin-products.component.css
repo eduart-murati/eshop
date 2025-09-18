@@ -1,0 +1,74 @@
+/* Ensure table is full width */
+table {
+    width: 100%;
+}
+
+/* Adjust the button height to match the input */
+.btn-clear {
+    height: calc(1.5em + .75rem + 2px);
+}
+
+/* Adjust the position of the X icon */
+.btn-clear i {
+    margin-top: -1px;
+}
+
+/* Define custom button colors */
+.btn-edit {
+    /* Background color */
+    background-color: #007bff;
+    /* Blue */
+    /* Text color */
+    color: #ffffff;
+    /* White */
+    /* Border color (optional) */
+    border-color: #007bff;
+    /* Blue */
+}
+
+/* Hover state */
+.btn-edit:hover {
+    /* Darken the background color slightly on hover */
+    background-color: #0056b3;
+    /* Darker shade of blue */
+    /* Adjust the border color if needed */
+    border-color: #0056b3;
+    /* Darker shade of blue */
+    /* You can also add a transition effect for smoother hover transitions */
+    transition: background-color 0.3s ease;
+}
+
+/* Active state */
+.btn-edit:active {
+    /* Darken the background color further on click */
+    background-color: #004080;
+    /* Even darker shade of blue */
+    /* Adjust the border color if needed */
+    border-color: #004080;
+    /* Even darker shade of blue */
+}
+
+.btn-clear {
+    margin-left: 10px;
+    /* Use the value that suits you best */
+}
+
+.mat-elevation-z8 {
+    margin-top: 20px; /* To add space between the form and the table */
+    margin-bottom: 10px; /* Adjust the bottom margin of the parent container */
+    padding: 5px; /* Add padding to create space between table and paginator */
+}
+
+
+/* Make all mat-header-cells bold */
+.mat-header-cell {
+    font-weight: bold;
+    font-size: 16px; /* Adjust size as needed */
+  }
+  
+  
+.mat-table {
+    width: 100%;
+    font-size: 14px; /* Adjust the font size as needed */
+}
+

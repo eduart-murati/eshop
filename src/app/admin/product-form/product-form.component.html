@@ -1,0 +1,133 @@
+<div class="row mt-4-custom">
+    <div class="col-md-6">
+        <form #f="ngForm" (ngSubmit)="save(f.value)">
+            <div class="form-group mb-3">
+                <label for="title">Title</label>
+                <input #title="ngModel" [(ngModel)]="product.title" name="title" id="title" type="text"
+                    class="form-control" required (ngModelChange)="onInputChange()">
+                <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+                    Title is required
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="price">Price</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input #price="ngModel" [(ngModel)]="product.price" name="price" id="price" type="number"
+                        class="form-control" required="" [min]="0" appRestrictInput (ngModelChange)="onInputChange()">
+                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">0.00</span>
+                </div>
+                <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+                    <div *ngIf="price.errors?.['required']"> Price is required.</div>
+                    <div *ngIf="price.errors?.['min']"> Price must be greater than or equal to 0.</div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="category">Category</label>
+                <select #category="ngModel" [(ngModel)]="product.category" name="category" id="category"
+                    class="form-control" required (ngModelChange)="onInputChange()">
+                    <option value=""></option>
+                    <option *ngFor="let c of categories$ | async" [value]="c.key">
+                        {{c.name}}
+                    </option>
+                </select>
+                <!-- Shtuar per butonin Add Category when missing-->
+                <button type="button" class="btn btn-outline-secondary" (click)="openAddCategory()">+ Add or Manage
+                    Category</button>
+
+                <div class="alert alert-danger" *ngIf="category.touched && category.invalid">
+                    Category is required.
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="imageUrl">Image URL</label>
+                <input #imageUrl="ngModel" [(ngModel)]="product.imageUrl" name="imageUrl" id="imageUrl" type="text"
+                    class="form-control" required [pattern]="imageUrlPattern" (ngModelChange)="onInputChange()">
+                <div class="alert alert-danger" *ngIf="imageUrl.touched && imageUrl.invalid">
+                    <div *ngIf="imageUrl.errors?.['required']"> Image URL is required.</div>
+                    <div *ngIf="imageUrl.errors?.['pattern']"> Please enter a valid URL.</div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 mb-3">
+                <button class="btn btn-back btn-md me-3" (click)="goBack()">Back</button>
+                <button type="submit" class="btn btn-primary btn-md me-3"
+                    [disabled]="f.invalid || !isChanged">Save</button>
+                <button type="button" (click)="delete()" class="btn btn-danger btn-md" [disabled]="!id">Delete</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <app-product-card [product]="product" [show-actions]="false"></app-product-card>
+    </div>
+</div>
+
+
+
+<!-- Modal për shtimin, editimin dhe fshirjen e kategorive -->
+<div class="modal" tabindex="-1" [class.show]="isCategoryModalOpen"
+    [style.display]="isCategoryModalOpen ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Manage Categories</h5>
+                <button type="button" class="btn-close" (click)="closeAddCategory()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Shtimi i një kategorie të re -->
+                <form *ngIf="!editingCategory" (ngSubmit)="addCategory()">
+                    <div class="form-group mb-3">
+                        <label for="newCategoryName">Category Name</label>
+                        <input [(ngModel)]="newCategoryName" name="newCategoryName" id="newCategoryName" type="text"
+                            class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                    <button type="button" class="btn btn-secondary" (click)="closeAddCategory()">Cancel</button>
+                </form>
+
+                <!-- Formë për editimin e një kategorie ekzistuese -->
+                <form *ngIf="editingCategory" (ngSubmit)="saveCategory()">
+                    <div class="form-group mb-3">
+                        <label for="editCategoryName">Edit Category Name</label>
+                        <input [(ngModel)]="editingCategory.name" name="editCategoryName" id="editCategoryName"
+                            type="text" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <!-- <button type="button" class="btn btn-danger"
+                        (click)="deleteCategory(editingCategory.key)">Delete</button> -->
+                    <button type="button" class="btn btn-secondary" (click)="closeAddCategory()">Cancel</button>
+                </form>
+
+                <!-- Lista e kategorive për editim dhe fshirje -->
+                <div *ngIf="categories$ | async as categories">
+                    <h6 class="mt-4">Existing Categories</h6>
+                    <ul class="list-group">
+                        <li *ngFor="let category of categories"
+                            class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ category.name }}
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm me-2"
+                                    (click)="editCategory(category)">Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    (click)="deleteCategory(category.key)">Delete</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="card" style="width: 18rem;">
+    <img class="card-img-top" [src]="product.imageUrl">
+    <div class="card-body">
+        <h5 class="card-title">{{product.title}}</h5>
+        <p class="card-text">{{product.price | currency:'USD': 'symbol'}}</p>
+    </div>
+</div> -->

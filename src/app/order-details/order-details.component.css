@@ -1,0 +1,23 @@
+.grand-total {
+    text-align: right;
+    /* Pozicionon tekstin në të djathtën */
+    margin-top: 20px;
+    /* Pak hapësirë lart */
+    font-size: 18px;
+    /* Madhësia e tekstit */
+    font-weight: bold;
+    /* Trajtimi i tekstit si i rëndësishëm */
+}
+
+/* Stilizimi i butonit Back me një ngjyrë të personalizuar */
+.btn-back {
+    background-color: #6c757d;
+    /* Ngjyrë gri e errët */
+    color: white;
+    border: none;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+    /* Ngjyrë gri më e errët kur kalohet mbi buton */
+}

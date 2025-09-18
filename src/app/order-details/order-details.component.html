@@ -1,0 +1,36 @@
+<div *ngIf="order">
+    <h1>Order Details</h1>
+    <p><strong>Order ID:</strong> {{ orderId }}</p>
+    <p><strong>Customer Name:</strong> {{ order.shipping.name }}</p>
+    <p><strong>Date Placed:</strong> {{ order.datePlaced | date }}</p>
+
+    <h2>Items</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th class="text-end">Price</th>
+                <th class="text-end">Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of order.items">
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="text-end">{{ item.product.price | currency }}</td>
+                <td class="text-end">{{ item.totalPrice | currency}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Grand Total -->
+    <div class="grand-total">
+        <p><strong>Grand Total: </strong> {{ grandTotal | currency }}</p>
+    </div>
+
+    <div>
+        <button class="btn btn-back btn-md me-3" (click)="goBack()">Back</button>
+    </div>
+
+</div>

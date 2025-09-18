@@ -1,0 +1,11 @@
+<div class="row align-items-center">
+    <div class="col-3">
+        <button (click)="removeFromCart()" class="btn btn-secondary quantity-btn">-</button>
+    </div>
+    <div class="col text-center">
+        {{ shoppingCart.getQuantity(product) }}
+    </div>
+    <div class="col-3">
+        <button (click)="addToCart()" class="btn btn-secondary quantity-btn">+</button>
+    </div>
+</div>

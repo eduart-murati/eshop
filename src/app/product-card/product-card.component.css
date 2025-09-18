@@ -1,0 +1,15 @@
+.card {
+    margin-bottom: 30px;
+}
+
+.card-footer {
+    padding: 0;
+}
+
+.card-footer .quantity-btn {
+    font-size: 1.5rem;
+    /* Adjust the size as needed */
+    padding: 35px;
+    /* Adjust the padding as needed */
+    width: 100%;
+}

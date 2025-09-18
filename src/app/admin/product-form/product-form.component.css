@@ -1,0 +1,41 @@
+.mt-4-custom {
+    margin-top: 70px;
+    /* TO customize margin from top for product form  */
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-dialog {
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Stilizimi i butonit Back me një ngjyrë të personalizuar */
+.btn-back {
+    background-color: #6c757d;
+    /* Ngjyrë gri e errët */
+    color: white;
+    border: none;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+    /* Ngjyrë gri më e errët kur kalohet mbi buton */
+}
